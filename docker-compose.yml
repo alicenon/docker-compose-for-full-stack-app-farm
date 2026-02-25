@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: ./test-fastapi-app
+    ports:
+      - "8000:80"  # Tu PC (8000) -> Contenedor (80)
+
+  frontend:
+    build: ./test-react-app
+    ports:
+      - "9000:80"  # Tu PC (9000) -> Contenedor (80)
