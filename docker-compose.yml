@@ -14,7 +14,7 @@ services:
     restart: always
 
   nginx:
-    image: ./test-react-app
+    image: docker-compose-for-full-stack-app-farm-frontend:latest
     container_name: nginx_proxy  # Opcional
     ports:
       - "80:80"  # ← ¡ESTE ES EL ÚNICO PUERTO QUE DEBES EXPOSER AHORA!
