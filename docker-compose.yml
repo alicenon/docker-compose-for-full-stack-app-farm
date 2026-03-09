@@ -12,14 +12,14 @@ services:
     # ports:
       # - "9000:80"  # Tu PC (9000) -> Contenedor (80)
     restart: always
-    
+
   nginx:
     image: nginx:alpine
     container_name: nginx_proxy  # Opcional
     ports:
       - "80:80"  # ← ¡ESTE ES EL ÚNICO PUERTO QUE DEBES EXPOSER AHORA!
     volumes:
-      - ./frontend/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./test-react-app/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./test-react-app/dist:/usr/share/nginx/html  # Asegúrate que esta carpeta tenga el build
     depends_on:
       - backend
