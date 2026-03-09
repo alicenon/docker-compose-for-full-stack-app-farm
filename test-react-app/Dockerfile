@@ -10,5 +10,6 @@ RUN npm run build  # ✅ Construye el frontend para producción
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
+RUN chmod -R 755 /usr/share/nginx/html  # ✅ Asegura permisos de lectura
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
