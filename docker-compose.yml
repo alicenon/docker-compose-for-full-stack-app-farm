@@ -14,7 +14,7 @@ services:
     restart: always
 
   nginx:
-    image: nginx:alpine
+    image: ./test-react-app
     container_name: nginx_proxy  # Opcional
     ports:
       - "80:80"  # ← ¡ESTE ES EL ÚNICO PUERTO QUE DEBES EXPOSER AHORA!
