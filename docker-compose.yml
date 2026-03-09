@@ -2,7 +2,7 @@ services:
   backend:
     build: ./test-fastapi-app
     ports:
-      - "8000:8000"  # Tu PC (8000) -> Contenedor (80)
+      - "8000:80"  # Tu PC (8000) -> Contenedor (80)
     expose:  # Usa 'expose' para que otros servicios en la red de Docker lo vean
       - "8000"
     restart: always
