@@ -2,7 +2,7 @@ services:
   backend:
     # context: ./test-fastapi-app/
     # dockerfile: Dockerfile
-    build: ./test-fastapi-app
+    build: ./backend
     container_name: fastapi_backend
     networks:
       - app-network
