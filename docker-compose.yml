@@ -3,7 +3,9 @@ services:
     # context: ./test-fastapi-app/
     # dockerfile: Dockerfile
     build: ./test-fastapi-app
-    container_name: docker-fastapi
+    container_name: fastapi_backend
+    networks:
+      - app-network
     restart: always
 
   # frontend:
@@ -11,6 +13,18 @@ services:
   #   # ports:
   #     # - "9000:80"  # Tu PC (9000) -> Contenedor (80)
   #   restart: always
+    # The React Frontend & NGINX Reverse Proxy Service
+  frontend:
+    build: ./frontend
+    container_name: react_frontend
+    ports:
+      # Map port 3000 on your host machine to port 80 inside the container (where Nginx is listening)
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: always
 
   nginx:
     build: ./test-react-app/  # Forma corta (correcta)
@@ -26,4 +40,16 @@ services:
       # - ./test-react-app/dist:/usr/share/nginx/html # cuidado con el dockerfile tenga esto y da forbiden
     depends_on:
       - backend
+    networks:
+      - app-network
     restart: always
+
+
+    # Define the network and volume
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
