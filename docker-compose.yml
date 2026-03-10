@@ -27,7 +27,7 @@ services:
     restart: always
 
   nginx:
-    build: ./test-react-app/  # Forma corta (correcta)
+    build: ./frontend  # Forma corta (correcta)
     # build: 
     #   context: ./test-react-app/
     #   dockerfile: Dockerfile
