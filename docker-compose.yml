@@ -1,7 +1,7 @@
 services:
   backend:
-    context: ./test-fastapi-app/
-    dockerfile: Dockerfile
+    # context: ./test-fastapi-app/
+    # dockerfile: Dockerfile
     build: ./test-fastapi-app
     container_name: docker-fastapi
     restart: always
@@ -13,9 +13,10 @@ services:
   #   restart: always
 
   nginx:
-    build: 
-      context: ./test-react-app/
-      dockerfile: Dockerfile
+    build: ./test-react-app/  # Forma corta (correcta)
+    # build: 
+    #   context: ./test-react-app/
+    #   dockerfile: Dockerfile
       # image: docker-compose-for-full-stack-app-farm-frontend:latest
     container_name: nginx_proxy  # Opcional
     ports:
