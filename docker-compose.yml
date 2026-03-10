@@ -1,27 +1,28 @@
 services:
   backend:
+    context: ./test-fastapi-app/
+    dockerfile: Dockerfile
     build: ./test-fastapi-app
-    ports:
-      - "8000:80"  # Tu PC (8000) -> Contenedor (80)
-    expose:  # Usa 'expose' para que otros servicios en la red de Docker lo vean
-      - "8000"
+    container_name: docker-fastapi
     restart: always
 
-  frontend:
-    build: ./test-react-app
-    # ports:
-      # - "9000:80"  # Tu PC (9000) -> Contenedor (80)
-    restart: always
+  # frontend:
+  #   build: ./test-react-app
+  #   # ports:
+  #     # - "9000:80"  # Tu PC (9000) -> Contenedor (80)
+  #   restart: always
 
   nginx:
-    image: docker-compose-for-full-stack-app-farm-frontend:latest
+    build: 
+      qcontext: ./test-react-app/
+      dockerfile: Dockerfile
+      # image: docker-compose-for-full-stack-app-farm-frontend:latest
     container_name: nginx_proxy  # Opcional
     ports:
       - "80:80"  # ← ¡ESTE ES EL ÚNICO PUERTO QUE DEBES EXPOSER AHORA!
-    volumes:
-      - ./test-react-app/nginx/nginx.conf:/etc/nginx/nginx.conf
+    # volumes:
+    #   - ./test-react-app/nginx/nginx.conf:/etc/nginx/nginx.conf
       # - ./test-react-app/dist:/usr/share/nginx/html # cuidado con el dockerfile tenga esto y da forbiden
     depends_on:
       - backend
-      - frontend  # Importante: esperar a que el frontend se construya (si haces el build aquí)
     restart: always
