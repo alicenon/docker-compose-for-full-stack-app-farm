@@ -14,7 +14,7 @@ services:
 
   nginx:
     build: 
-      qcontext: ./test-react-app/
+      context: ./test-react-app/
       dockerfile: Dockerfile
       # image: docker-compose-for-full-stack-app-farm-frontend:latest
     container_name: nginx_proxy  # Opcional
