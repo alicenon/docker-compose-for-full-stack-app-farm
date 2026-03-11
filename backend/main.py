@@ -14,4 +14,4 @@ app.add_middleware(
 
 @app.get("/api/hello")
 def hello():
-    return {"message": "¡Hola desde Docker y FastAPI y Github Action con CI/CD!"}
+    return {"message": "¡Hola desde Docker y FastAPI y Github Action con CI/CD 2!"}
