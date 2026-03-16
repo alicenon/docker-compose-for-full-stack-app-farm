@@ -1,55 +1,43 @@
+version: "3.8"
+
 services:
   backend:
-    # context: ./test-fastapi-app/
-    # dockerfile: Dockerfile
-    build: ./backend
-    container_name: fastapi_backend
+    build: 
+      context: ./backend
+    # Importante: No uses container_name si quieres que Dokploy gestione logs/métricas
     networks:
-      - app-network
+      - dokploy-network
     restart: always
+    environment:
+      - DATABASE_URL=postgresql://user:pass@db:5432/dbname
 
-  # frontend:
-  #   build: ./test-react-app
-  #   # ports:
-  #     # - "9000:80"  # Tu PC (9000) -> Contenedor (80)
-  #   restart: always
-    # The React Frontend & NGINX Reverse Proxy Service
   frontend:
-    build: ./frontend
-    container_name: react_frontend
-    ports:
-      # Map port 3000 on your host machine to port 80 inside the container (where Nginx is listening)
-      - "5173:80"
+    build: 
+      context: ./frontend
     depends_on:
       - backend
     networks:
-      - app-network
+      - dokploy-network
     restart: always
-
-  nginx:
-    build: ./frontend  # Forma corta (correcta)
-    # build: 
-    #   context: ./test-react-app/
-    #   dockerfile: Dockerfile
-      # image: docker-compose-for-full-stack-app-farm-frontend:latest
-    container_name: nginx_proxy  # Opcional
+    # Para testeo por IP, mapea el puerto directamente:
     ports:
-      - "80:80"  # ← ¡ESTE ES EL ÚNICO PUERTO QUE DEBES EXPOSER AHORA!
-    # volumes:
-    #   - ./test-react-app/nginx/nginx.conf:/etc/nginx/nginx.conf
-      # - ./test-react-app/dist:/usr/share/nginx/html # cuidado con el dockerfile tenga esto y da forbiden
-    depends_on:
-      - backend
+      - "80:80" 
+
+  # Opcional: Base de datos persistente
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
-      - app-network
-    restart: always
+      - dokploy-network
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=dbname
 
-
-    # Define the network and volume
 networks:
-  app-network:
-    driver: bridge
+  dokploy-network:
+    external: true
 
 volumes:
   postgres_data:
-    driver: local
