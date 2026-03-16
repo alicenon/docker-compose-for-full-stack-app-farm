@@ -24,7 +24,7 @@ services:
     #   - "80:80" sin port en dokploy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.test-farm-frontend.rule=Host(`34.229.11.205.uwu.io`)"
+      - "traefik.http.routers.test-farm-frontend.rule=Host(`34.229.11.205.sslip.io`)"
       - "traefik.http.routers.test-farm-frontend.entrypoints=web"
       - "traefik.http.services.test-farm-frontend.loadbalancer.server.port=80"
 
