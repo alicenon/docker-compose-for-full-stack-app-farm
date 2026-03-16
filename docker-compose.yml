@@ -20,8 +20,8 @@ services:
       - dokploy-network
     restart: always
     # Para testeo por IP, mapea el puerto directamente:
-    ports:
-      - "80:80" 
+    # ports:
+    #   - "80:80" sin port en dokploy
 
   # Opcional: Base de datos persistente
   db:
